@@ -4,6 +4,7 @@ import React, {ReactNode, useMemo} from 'react'
 import {Button, Grid, Menu, MenuButton, MenuItem} from '@sanity/ui'
 import {useId} from '@reach/auto-id'
 import PatchEvent from '../../../PatchEvent'
+import {useConditionalReadOnly} from '../../common'
 
 // These are the props any implementation of the ArrayFunctions part will receive
 export interface ArrayFunctionsProps<SchemaType extends ArraySchemaType, MemberType> {
@@ -24,6 +25,7 @@ export default function ArrayFunctions<MemberType>(
 ) {
   const {type, readOnly, children, onCreateValue, onAppendItem} = props
   const menuButtonId = useId()
+  const conditionalReadOnly = useConditionalReadOnly() ?? readOnly
 
   const insertItem = React.useCallback(
     (itemType) => {
@@ -40,7 +42,7 @@ export default function ArrayFunctions<MemberType>(
 
   const popoverProps = useMemo(() => ({constrainSize: true, portal: true}), [])
 
-  if (readOnly) {
+  if (conditionalReadOnly) {
     return null
   }
 

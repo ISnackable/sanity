@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect'
 import React, {MutableRefObject} from 'react'
 import {render} from '@testing-library/react'
 import Schema from '@sanity/schema'
-import {ConditionalReadOnlyField} from '../ConditionalReadOnlyField'
+import {ConditionalReadOnlyField} from '../conditionalReadOnly/ConditionalReadOnlyField'
 import SanityFormBuilderContext from '../../../sanity/SanityFormBuilderContext'
 import FormBuilder from '../../../sanity/SanityFormBuilder'
 

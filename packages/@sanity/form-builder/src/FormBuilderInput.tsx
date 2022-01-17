@@ -15,7 +15,7 @@ import {FormFieldPresence, FormFieldPresenceContext} from '@sanity/base/presence
 import PatchEvent from './PatchEvent'
 import {emptyArray} from './utils/empty'
 import {Props as InputProps} from './inputs/types'
-import {ConditionalReadOnlyField} from './inputs/common'
+import {ConditionalReadOnlyField, useConditionalReadOnly} from './inputs/common'
 
 const EMPTY_MARKERS: Marker[] = emptyArray()
 const EMPTY_PATH: Path = emptyArray()
@@ -294,6 +294,7 @@ function FormBuilderInputInner(props: FormBuilderInputInnerProps) {
     value,
     ...rest
   } = props
+  const conditionalReadOnly = useConditionalReadOnly() ?? readOnly
 
   const presence = presenceProp || context.presence
 
@@ -326,7 +327,7 @@ function FormBuilderInputInner(props: FormBuilderInputInnerProps) {
       isRoot,
       value,
       compareValue: childCompareValue,
-      readOnly,
+      readOnly: conditionalReadOnly,
       markers: childMarkers.length === 0 ? EMPTY_MARKERS : childMarkers,
       type,
       presence: childPresenceInfo,
@@ -347,7 +348,7 @@ function FormBuilderInputInner(props: FormBuilderInputInnerProps) {
       onBlur,
       onChange,
       onFocus,
-      readOnly,
+      conditionalReadOnly,
       rest,
       setInput,
       type,

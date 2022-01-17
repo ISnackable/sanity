@@ -9,7 +9,7 @@ import PatchEvent, {set, unset} from '../../../PatchEvent'
 import Preview from '../../../Preview'
 import {ItemWithMissingType} from '../ArrayOfObjectsInput/item/ItemWithMissingType'
 import {Item, List} from '../common/list'
-import {ConditionalReadOnlyField} from '../../common'
+import {ConditionalReadOnlyField, useConditionalReadOnly} from '../../common'
 import {resolveValueWithLegacyOptionsSupport, isLegacyOptionsItem} from './legacyOptionsSupport'
 
 type Focusable = {focus: () => void}
@@ -135,7 +135,7 @@ export default class OptionsArrayInput extends React.PureComponent<OptionsArrayI
                     parent={value}
                     value={checked}
                   >
-                    <Checkbox
+                    <WrappedCheckbox
                       disabled={disabled}
                       checked={checked}
                       onChange={(e) => this.handleChange(e.currentTarget.checked, option)}
@@ -168,4 +168,10 @@ export default class OptionsArrayInput extends React.PureComponent<OptionsArrayI
       </FormFieldSet>
     )
   }
+}
+
+const WrappedCheckbox = (props: React.HTMLProps<HTMLInputElement>) => {
+  const {disabled, checked, onChange, onFocus, onBlur} = props
+  const readOnly = useConditionalReadOnly()
+  return <Checkbox {...{disabled, checked, readOnly, onChange, onFocus, onBlur}} />
 }

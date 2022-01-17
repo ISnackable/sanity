@@ -7,6 +7,7 @@ import {FormBuilderInput} from '../../FormBuilderInput'
 import {InvalidValueInput} from '../InvalidValueInput'
 import PatchEvent from '../../PatchEvent'
 import {ConditionalHiddenField} from '../common/ConditionalHiddenField'
+import {useConditionalReadOnly} from '../common/conditionalReadOnly'
 
 interface FieldType {
   name: string
@@ -48,16 +49,17 @@ export const ObjectInputField = forwardRef(function ObjectInputField(
     parent,
     readOnly,
   } = props
+  const conditionalReadOnly = useConditionalReadOnly() ?? readOnly
 
   const handleChange = useCallback(
     (event) => {
-      const isReadOnly = readOnly ?? field.type.readOnly
+      const isReadOnly = conditionalReadOnly ?? field.type.readOnly
       if (typeof isReadOnly === 'boolean' && isReadOnly) {
         return
       }
       onChange(event, field)
     },
-    [readOnly, field, onChange]
+    [conditionalReadOnly, field, onChange]
   )
 
   const fieldPath = useMemo(() => [field.name], [field.name])
@@ -88,7 +90,7 @@ export const ObjectInputField = forwardRef(function ObjectInputField(
         presence={presence}
         parent={parent}
         ref={forwardedRef}
-        readOnly={readOnly || field.type.readOnly}
+        readOnly={conditionalReadOnly || field.type.readOnly}
       />
     )
   }, [
@@ -106,7 +108,7 @@ export const ObjectInputField = forwardRef(function ObjectInputField(
     onFocus,
     presence,
     value,
-    readOnly,
+    conditionalReadOnly,
   ])
 
   if (!isValueCompatible) {

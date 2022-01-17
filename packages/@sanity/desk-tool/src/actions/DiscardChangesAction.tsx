@@ -46,6 +46,7 @@ export const DiscardChangesAction: DocumentActionComponent = ({
         onCancel: onComplete,
         onConfirm: handleConfirm,
         message: <>Are you sure you want to discard all changes since last published?</>,
+        actionName: 'discard-changes',
       },
     [handleConfirm, isConfirmDialogOpen, onComplete]
   )

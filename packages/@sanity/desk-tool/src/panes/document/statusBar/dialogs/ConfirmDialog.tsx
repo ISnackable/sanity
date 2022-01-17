@@ -42,6 +42,7 @@ function ConfirmDialogContent(props: {dialog: DocumentActionConfirmDialogProps})
     message,
     onCancel,
     onConfirm,
+    actionName,
   } = dialog
   const {isTopLayer} = useLayer()
   const [element, setElement] = useState<HTMLElement | null>(null)
@@ -78,6 +79,7 @@ function ConfirmDialogContent(props: {dialog: DocumentActionConfirmDialogProps})
             onClick={onConfirm}
             text={confirmButtonText || 'Confirm'}
             tone={color ? LEGACY_DIALOG_TO_UI_COLOR[color] : 'primary'}
+            data-testid={actionName ? `confirm-${actionName}` : ''}
           />
         </Grid>
       </Box>
